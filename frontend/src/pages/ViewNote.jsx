@@ -51,22 +51,6 @@ export default function ViewNote() {
         <p className="text-slate-700 text-sm leading-relaxed whitespace-pre-line flex-1">
           {note.content || <span className="text-slate-400 italic">ไม่มีเนื้อหา</span>}
         </p>
-
-        {/* Actions */}
-        <div className="flex gap-3 pt-4 border-t border-slate-100">
-          <button
-            onClick={() => navigate(`/edit/${id}`)}
-            className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg transition"
-          >
-            ✏️ แก้ไข
-          </button>
-          <button
-            onClick={handleDelete}
-            className="flex-1 bg-red-50 hover:bg-red-100 text-red-500 font-semibold py-2 rounded-lg transition"
-          >
-            🗑️ ลบ
-          </button>
-        </div>
       </div>
     </div>
   );
