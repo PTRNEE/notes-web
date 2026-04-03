@@ -48,16 +48,8 @@ export default function ViewNote() {
           >
             ←
           </button>
-          <span className="text-sm text-slate-400">โน้ต</span>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            onClick={() => togglePin(note.id)}
-            className={`text-xl transition ${isPinned ? "text-indigo-500" : "text-slate-300 hover:text-indigo-400"}`}
-            title={isPinned ? "ถอนปักหมุด" : "ปักหมุด"}
-          >
-            📌
-          </button>
           <button
             onClick={() => navigate(`/edit/${id}`)}
             className="text-sm px-3 py-1.5 bg-slate-100 hover:bg-indigo-100 text-slate-600 hover:text-indigo-600 rounded-lg transition"

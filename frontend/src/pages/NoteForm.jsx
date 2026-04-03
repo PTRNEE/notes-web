@@ -56,7 +56,7 @@ export default function NoteForm() {
         </h1>
       </div>
 
-      {/* Card เหมือนหน้าแรก */}
+      {/* Card */}
       <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col gap-4">
         <input
           className="text-lg font-semibold text-slate-800 placeholder-slate-300 border-0 border-b border-slate-100 pb-3 focus:outline-none focus:border-indigo-300 transition"
@@ -72,17 +72,17 @@ export default function NoteForm() {
         />
         <div className="flex gap-3 pt-3 border-t border-slate-100">
           <button
-            onClick={() => navigate("/")}
-            className="px-4 py-2 text-sm text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
-          >
-            ยกเลิก
-          </button>
-          <button
             onClick={handleSubmit}
             disabled={saving || !title.trim()}
             className="flex-1 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 text-white text-sm font-semibold py-2 rounded-lg transition"
           >
             {saving ? "กำลังบันทึก..." : "บันทึก"}
+          </button>
+          <button
+            onClick={() => navigate("/")}
+            className="px-4 py-2 text-sm text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition"
+          >
+            ยกเลิก
           </button>
         </div>
       </div>
