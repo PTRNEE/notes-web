@@ -1,55 +1,45 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useNotes } from "../context/NoteContext";
 
-const API = import.meta.env.VITE_API_URL;
-
-export default function EditNote() {
-  const { id } = useParams();
+export default function CreateNote() {
+  const { createNote } = useNotes();
   const navigate = useNavigate();
-  const { updateNote } = useNotes();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    axios.get(`${API}/notes/${id}`)
-      .then((res) => { setTitle(res.data.title); setContent(res.data.content || ""); })
-      .catch(() => navigate("/"))
-      .finally(() => setLoading(false));
-  }, [id]);
+  const [saving, setSaving] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateNote(Number(id), title, content);
+    if (!title.trim()) return;
+    setSaving(true);
+    await createNote(title, content);
     navigate("/");
   };
 
-  if (loading) return <p className="text-center py-20 text-slate-400">กำลังโหลด...</p>;
-
   return (
     <div className="max-w-2xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold text-slate-700 mb-6">✏️ แก้ไขโน้ต</h1>
+      <h1 className="text-2xl font-bold text-slate-700 mb-6">📝 โน้ตใหม่</h1>
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col gap-4">
         <input
           className="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          placeholder="หัวข้อ *"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="หัวข้อ *"
         />
         <textarea
           className="border border-slate-200 rounded-lg px-3 py-2 text-sm min-h-60 resize-y focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          placeholder="เนื้อหา..."
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="เนื้อหา..."
         />
         <div className="flex gap-3">
           <button
             type="submit"
-            className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 rounded-lg transition"
+            disabled={saving || !title.trim()}
+            className="flex-1 bg-indigo-500 hover:bg-indigo-600 disabled:opacity-50 text-white font-semibold py-2 rounded-lg transition"
           >
-            บันทึก
+            {saving ? "กำลังบันทึก..." : "บันทึก"}
           </button>
           <button
             type="button"

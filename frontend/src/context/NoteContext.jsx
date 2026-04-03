@@ -15,7 +15,7 @@ export function NoteProvider({ children }) {
       setError(null);
       const res = await axios.get(`${API}/notes`);
       setNotes(res.data);
-    } catch (err) {
+    } catch {
       setError("โหลดข้อมูลไม่สำเร็จ");
     } finally {
       setLoading(false);
@@ -37,10 +37,29 @@ export function NoteProvider({ children }) {
     setNotes((prev) => prev.filter((n) => n.id !== id));
   };
 
+  // Pin จัดการใน localStorage
+  const [pinnedIds, setPinnedIds] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("pinnedIds") || "[]");
+    } catch { return []; }
+  });
+
+  const togglePin = (id) => {
+    setPinnedIds((prev) => {
+      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+      localStorage.setItem("pinnedIds", JSON.stringify(next));
+      return next;
+    });
+  };
+
   useEffect(() => { fetchNotes(); }, []);
 
   return (
-    <NoteContext.Provider value={{ notes, loading, error, createNote, updateNote, deleteNote }}>
+    <NoteContext.Provider value={{
+      notes, loading, error,
+      createNote, updateNote, deleteNote,
+      pinnedIds, togglePin
+    }}>
       {children}
     </NoteContext.Provider>
   );
