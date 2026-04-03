@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoteProvider } from "./context/NoteContext";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import CreateNote from "./pages/CreateNote";
-import EditNote from "./pages/EditNote";
+import NoteForm from "./pages/NoteForm";
 import ViewNote from "./pages/ViewNote";
 
 export default function App() {
@@ -14,8 +13,8 @@ export default function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/create" element={<CreateNote />} />
-            <Route path="/edit/:id" element={<EditNote />} />
+            <Route path="/create" element={<NoteForm />} />
+            <Route path="/edit/:id" element={<NoteForm />} />
             <Route path="/view/:id" element={<ViewNote />} />
           </Routes>
         </div>
